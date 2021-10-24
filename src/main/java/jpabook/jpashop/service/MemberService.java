@@ -38,4 +38,11 @@ public class MemberService {
     public Member findOne(Long memberId){
         return memberRepository.findOne(memberId);
     }
+
+    // 업데이트 로직의 반환값은 대부분 void, id 값만 넘김. (객체를 넘겨도 되지만 단순 조회용 로직의 색깔을 띠울 수 있기 때문.)
+    @Transactional
+    public void update(Long id, String name) {
+        Member member = memberRepository.findOne(id);
+        member.setName(name);
+    }
 }
