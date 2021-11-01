@@ -110,4 +110,17 @@ public class OrderRepository {
                         " join fetch o.delivery d", Order.class
         ).getResultList();
     }
+
+    public List<Order> findAllWithItem() {
+
+        // RDBMS distinct, JPA distinct 다른 개념
+        // RDBMS 경우 한 row가 모두 같아야 중복이 제거 되지만, JPA 경우 RDBMS distinct 기능 + 같은 엔티티(id)일 경우 중복이 제거 된다.
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
 }
